@@ -59,17 +59,38 @@ print("\n=============\nBLACK SUBJECT FRACTION\n=============\n")
 print(races["B"] / total_shootings)
 
 # 5
-unarmed_selection = {}
-print("\n=============\nUNARMED SUBJECTS DICTIONARY\n=============\n")
+print("\n=============\nUNARMED SELECTION\n=============\n")
+unarmed_selection = []
 with open(file_path, mode="r", newline="") as data:
     for row in csv.reader(data):
         unarmed = row[get_col("armed_with")] == "unarmed"
-
-        if not unarmed: 
-            continue
         
-        unarmed
-print(unarmed_selection)
+        if unarmed: unarmed_selection.append(row)
+
+# print(unarmed_selection)
+
+# 6
+print("\n=============\nUNARMED SUBJECTS DICTIONARY\n=============\n")
+total_unarmed_shootings = len(unarmed_selection)
+unarmed_race_counts = {}
+for row in unarmed_selection:
+    race = row[get_col("race")]
+
+    if race == "race": 
+        continue
+
+    total_shootings += 1
+
+    if race in unarmed_race_counts:
+        unarmed_race_counts[race] += 1
+        continue
+    unarmed_race_counts[race] = 1
+
+print(unarmed_race_counts)
+
+# 7
+print("\n=============\nBLACK UNARMED SUBJECT FRACTION\n=============\n")
+print(unarmed_race_counts["B"] / total_shootings)
 
 """
 
@@ -85,7 +106,7 @@ print(unarmed_selection)
 
 6. Create a new dictionary, called unarmed_race_counts, which is initialized as an empty dictionary, and built by iterating through unarmed selection, and following an accumulator pattern. The purpose of this dictionary will be to count the number of occurrences of each race among subjects of fatal police shootings, including only those where the subject is unarmed. The keys in this dictionary should be races, and the corresponding values should be the number of subjects of that race.
 
-• Print the fraction of unarmed fatal police shootings with a black subject. This should
+7. Print the fraction of unarmed fatal police shootings with a black subject. This should
 be a number between 0 and 1, and can be computed by dividing the number of unarmed fatal police shootings with a black subject (you can get this from the dictionary
 unarmed race counts), by the total number of unarmed fatal police shootings (how
 can you get this without hard coding?).
